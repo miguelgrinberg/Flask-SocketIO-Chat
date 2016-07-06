@@ -13,7 +13,7 @@ def joined(message):
 
 
 @socketio.on('text', namespace='/chat')
-def left(message):
+def text(message):
     """Sent by a client when the user entered a new message.
     The message is sent to all people in the room."""
     room = session.get('room')
