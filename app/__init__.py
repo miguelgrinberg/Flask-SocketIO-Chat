@@ -1,5 +1,5 @@
 from flask import Flask
-from flask.ext.socketio import SocketIO
+from flask_socketio import SocketIO
 
 socketio = SocketIO()
 
