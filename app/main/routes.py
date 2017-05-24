@@ -5,7 +5,7 @@ from .forms import LoginForm
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    """"Login form to enter a room."""
+    """Login form to enter a room."""
     form = LoginForm()
     if form.validate_on_submit():
         session['name'] = form.name.data
