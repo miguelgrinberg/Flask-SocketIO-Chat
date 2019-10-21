@@ -1,7 +1,7 @@
 click==6.7
-eventlet==0.23.0
-Flask==1.0.2
-Flask-SocketIO==3.0.1
+eventlet==0.25.1
+Flask==1.1.1
+Flask-SocketIO==4.2.1
 Flask-WTF==0.14.2
 greenlet==0.4.13
 itsdangerous==0.24
