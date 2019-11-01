@@ -10,5 +10,5 @@ MarkupSafe==1.0
 python-engineio==2.1.1
 python-socketio==1.9.0
 six==1.11.0
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 WTForms==2.2.1
