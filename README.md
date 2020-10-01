@@ -1,4 +1,4 @@
-Flask-SocketIO-Chat
+Flask-SocketIO-Chat- Must Try
 ===================
 
 A simple chat application that demonstrates how to structure a Flask-SocketIO application.
