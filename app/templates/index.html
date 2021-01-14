@@ -1,13 +1,48 @@
 <html>
     <head>
-        <title>Flask-SocketIO-Chat</title>
+        <title>Lajward Chatroom</title>
+        <style>
+            body{
+                text-align : center;
+            }
+            form{
+               position: absolute;
+               top : 30%;
+               left : 50%;
+               transform : translate(-50%, -50%);
+            }
+            *{
+                font-family: 'Roboto', sans-serif;
+            }
+            input{
+                width : 400px;
+                border : 1px solid rgba(0, 0, 0, 0.12);
+                border-radius: 4px;
+                background-color : transparent;
+                padding : 10px;
+                margin : 10px;
+                display : block;
+            }
+
+            input[type="submit"]{
+                cursor : pointer;
+                background-color : lightgreen;
+                color : green;
+                font-weight: bold;
+                transition: all 0.3s ease-in-out;
+                border : 3px solid lightgreen;
+            }
+            input[type="submit"]:hover{
+                background-color : transparent;
+            }
+        </style>
     </head>
     <body>
-        <h1>Flask-SocketIO-Chat</h1>
         <form method="POST">
+            <h1>Lajward Chatroom</h1>
             {{ form.hidden_tag() }}
-            {{ form.name.label }}: {{ form.name() }} {% for error in form.name.errors %}{{ error }}{% endfor %}<br>
-            {{ form.room.label }}: {{ form.room() }} {% for error in form.room.errors %}{{ error }}{% endfor %}<br>
+            <input name="name" placeholder="Username" />
+            <input name="room" placeholder="Room"/>
             {{ form.submit() }}
         </form>
     </body>
