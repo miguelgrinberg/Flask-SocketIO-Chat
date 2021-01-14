@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Lajward Chatroom {{ room }}</title>
+        <title>{{ room }}</title>
         <style>
             *{
                 font-family: 'Roboto', sans-serif;
@@ -42,6 +42,7 @@
                 border-radius: 4px;
                 overflow-y: scroll;
                 overflow-x: hidden;
+                max-height : 50vh;
             }
             #me, #others{
                 clear : both;
@@ -129,13 +130,14 @@
     <body>
 
         <div class="container">
-            <h1>Lajward Chatroom</h1>
+            <h1>{{room}}</h1>
             <div id="chatsContainer"></div>
             
             <div class="msgIptContainer">
                 <input id="text" placeholder="Enter your message here" />
                 <button id="emojiPicker">🙂</button>
             </div>
+            <br/>
             <a class="leaveRoom" href="#" onclick="leave_room();">Leave this room</a>
         </div>
 

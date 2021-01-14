@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Lajward Chatroom</title>
+        <title>Log to Chatroom</title>
         <style>
             body{
                 text-align : center;
@@ -39,9 +39,9 @@
     </head>
     <body>
         <form method="POST">
-            <h1>Lajward Chatroom</h1>
+            <h1>Enter a Chatroom</h1>
             {{ form.hidden_tag() }}
-            <input name="name" placeholder="Username" />
+            <input name="name" placeholder="Fullname" />
             <input name="room" placeholder="Room"/>
             {{ form.submit() }}
         </form>
