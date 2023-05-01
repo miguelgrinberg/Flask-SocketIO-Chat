@@ -4,7 +4,7 @@ click==8.0.4
 Deprecated==1.2.13
 dnspython==2.2.1
 eventlet==0.33.0
-Flask==2.0.3
+Flask==2.3.2
 Flask-SocketIO==5.1.1
 Flask-WTF==1.0.0
 greenlet==1.1.2
