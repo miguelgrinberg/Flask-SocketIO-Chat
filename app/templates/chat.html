@@ -15,7 +15,19 @@
                     $('#chat').scrollTop($('#chat')[0].scrollHeight);
                 });
                 socket.on('message', function(data) {
-                    $('#chat').val($('#chat').val() + data.msg + '\n');
+                    var utcTime = new Date(data.timestamp);
+                    var localTime = new Date(utcTime.getTime() - utcTime.getTimezoneOffset() * 60000);
+                    var formattedTime = localTime.toLocaleString(undefined, {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false
+                    });
+                    var formattedMsg = '[' + formattedTime + '] ' + data.username + ': ' + data.msg;
+                    $('#chat').val($('#chat').val() + formattedMsg + '\n');
                     $('#chat').scrollTop($('#chat')[0].scrollHeight);
                 });
                 $('#text').keypress(function(e) {
@@ -30,8 +42,6 @@
             function leave_room() {
                 socket.emit('left', {}, function() {
                     socket.disconnect();
-
-                    // go back to the login page
                     window.location.href = "{{ url_for('main.index') }}";
                 });
             }
