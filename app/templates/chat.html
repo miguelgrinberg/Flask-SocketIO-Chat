@@ -1,48 +1,79 @@
 <html>
-  <head>
+<head>
     <title>Flask-SocketIO-Chat: {{ room }}</title>
     <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="//cdn.socket.io/4.4.1/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
     <link rel="stylesheet" href="static/mystyle.css">
     <script type="text/javascript" charset="utf-8">
-      let socket;
-      $(document).ready(function(){
-        socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
-        socket.on('connect', function() {
-          socket.emit('joined', {});
-        });
-        socket.on('status', function(data) {
-          d = new Date();
-          $('#chat').val($('#chat').val() + `[${d.toLocaleTimeString()}] <${data.msg}>\n`);
-          $('#chat').scrollTop($('#chat')[0].scrollHeight);
-        });
-        socket.on('message', function(data) {
-          $('#chat').val($('#chat').val() + `[${d.toLocaleTimeString()}] ${data.msg}\n`);
-          $('#chat').scrollTop($('#chat')[0].scrollHeight);
-        });
-        $('#text').keypress(function(e) {
-          const code = e.keyCode || e.which;
-          if (code == 13) {
-            text = $('#text').val();
-            $('#text').val('');
-            socket.emit('text', {msg: text});
-          }
-        });
-      });
-      function leave_room() {
-        socket.emit('left', {}, function() {
-          socket.disconnect();
+        let socket;
+        const secretKey = CryptoJS.enc.Utf8.parse("12345678901234567890123456789012"); // 256-bit key
+        const iv = CryptoJS.enc.Utf8.parse("1234567890123456"); // 128-bit IV
+    
+        function encryptMessage(message) {
+            const encrypted = CryptoJS.AES.encrypt(message, secretKey, {
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
+            return encrypted.toString();
+        }
+    
+        function decryptMessage(encryptedMessage) {
+            const decodedMessage = CryptoJS.enc.Base64.parse(encryptedMessage);
+            
+            const decrypted = CryptoJS.AES.decrypt(
+                { ciphertext: decodedMessage }, secretKey, {
+                    iv: iv,
+                    mode: CryptoJS.mode.CBC,
+                    padding: CryptoJS.pad.Pkcs7
+                }
+            );
+            return decrypted.toString(CryptoJS.enc.Utf8);
+        }
 
-          // go back to the login page
-          window.location.href = "{{ url_for('main.index') }}";
+    
+        $(document).ready(function(){
+            socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
+            socket.on('connect', function() {
+                socket.emit('joined', {});
+            });
+            socket.on('status', function(data) {
+                d = new Date();
+                $('#chat').val($('#chat').val() + `[${d.toLocaleTimeString()}] <${data.msg}>\n`);
+                $('#chat').scrollTop($('#chat')[0].scrollHeight);
+            });
+            socket.on('message', function(data) {
+                d = new Date();
+                $('#chat').val($('#chat').val() + `[${d.toLocaleTimeString()}] ${data.msg}\n`);
+                $('#chat').scrollTop($('#chat')[0].scrollHeight);
+            });
+            $('#text').keypress(function(e) {
+                const code = e.keyCode || e.which;
+                if (code == 13) {
+                    let text = $('#text').val();
+                    $('#text').val('');
+                    const encryptedText = encryptMessage(text);
+                    socket.emit('text', {msg: encryptedText});
+                }
+            });
         });
-      }
-    </script>
-  </head>
-  <body>
+        
+        function leave_room() {
+            socket.emit('left', {}, function() {
+                socket.disconnect();
+                window.location.href = "{{ url_for('main.index') }}";
+            });
+        }
+    </script>    
+</head>
+<body>
     <h1>Flask-SocketIO-Chat: {{ room }}</h1>
-    <textarea id="chat" cols="80" rows="20"></textarea><br><br>
-    <input id="text" size="80" placeholder="Enter your message here"><br><br>
-    <a href="#" onclick="leave_room();">Leave this room</a>
-  </body>
+    <div class="chat-container">
+        <textarea id="chat" cols="80" rows="20" readonly></textarea><br><br>
+        <input id="text" size="80" placeholder="Enter your message here"><br><br>
+        <a href="#" onclick="leave_room();">Leave this room</a>
+    </div>
+</body>
 </html>
