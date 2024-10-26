@@ -38,7 +38,7 @@ python-socketio==5.11.3
     # via flask-socketio
 simple-websocket==1.0.0
     # via python-engineio
-werkzeug==3.0.3
+werkzeug==3.0.6
     # via flask
 wsproto==1.2.0
     # via simple-websocket
