@@ -19,7 +19,7 @@ flask-socketio==5.3.6
     # via my_project (/home/miguel/Documents/dev/microblog/flask-socketio-chat/pyproject.toml)
 flask-wtf==1.2.1
     # via my_project (/home/miguel/Documents/dev/microblog/flask-socketio-chat/pyproject.toml)
-h11==0.14.0
+h11==0.16.0
     # via wsproto
 itsdangerous==2.2.0
     # via
