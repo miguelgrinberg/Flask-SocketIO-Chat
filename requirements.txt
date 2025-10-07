@@ -34,7 +34,7 @@ markupsafe==2.1.5
     #   wtforms
 python-engineio==4.9.1
     # via python-socketio
-python-socketio==5.11.3
+python-socketio==5.14.0
     # via flask-socketio
 simple-websocket==1.0.0
     # via python-engineio
